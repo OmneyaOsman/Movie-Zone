@@ -1,4 +1,4 @@
-package com.omni.movieappliation.feature
+package com.omni.movieappliation.features
 
 import android.app.Application
 import com.omni.movieappliation.useCases.Domain

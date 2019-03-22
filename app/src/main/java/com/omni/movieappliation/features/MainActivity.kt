@@ -1,4 +1,4 @@
-package com.omni.movieappliation.feature
+package com.omni.movieappliation.features
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -20,6 +20,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField('String', 'MOVIE_DB_API_KEY', '"ceb888b71023afda704f84975d2642b5"')
+    }
 }
 
 dependencies {configuration->
