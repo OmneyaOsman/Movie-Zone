@@ -22,13 +22,47 @@ android {
     }
 }
 
-dependencies {
+dependencies {configuration->
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.core:core-ktx:1.0.0-rc02'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    androidX(configuration)
+    architectureComponents(configuration)
+    customDependencies(configuration)
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+}
+
+private static void androidX(configuration) {
+    def android_x_version = "1.1.0-alpha02"
+    configuration.implementation "com.google.android.material:material:$android_x_version"
+    configuration.implementation "androidx.appcompat:appcompat:$android_x_version"
+    configuration.implementation "androidx.core:core-ktx:$android_x_version"
+    configuration.implementation "androidx.recyclerview:recyclerview:$android_x_version"
+    def constraint_layout_version = "2.0.0-alpha3"
+    configuration.implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+}
+
+private static void architectureComponents(configuration) {
+    def architecture_components_version = "2.0.0-beta01"
+    // LiveData & ViewModel
+    configuration.implementation "androidx.lifecycle:lifecycle-extensions:$architecture_components_version"
+    def navigationVersion="1.0.0-alpha08"
+    configuration.implementation "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
+    configuration.implementation "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
+    configuration.implementation 'com.jakewharton.timber:timber:4.7.1'
+
+}
+
+private static void customDependencies(configuration){
+    def retrofit_version="2.4.0"
+    configuration.implementation 'com.google.code.gson:gson:2.8.4'
+    configuration.implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    configuration.implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    configuration.implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    configuration.implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version" //RxJava adapter
+    //Rx
+//    configuration.implementation "io.reactivex.rxjava2:rxjava:2.2.0"
+//    configuration.implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
+
 }
