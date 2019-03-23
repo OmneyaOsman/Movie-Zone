@@ -3,6 +3,9 @@ package com.omni.movieappliation.useCases
 import android.content.Context
 import com.omni.movieappliation.BuildConfig
 import com.omni.movieappliation.entities.MoviesResponse
+import io.reactivex.Single
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -17,22 +20,26 @@ const val IMAGE_SIZE = "w185/"
 const val DISCOVER_ENDPOINT = "3/movie/top_rated "
 
 
-val apiServer  :ApiServer by lazy {
-    retrofitBuilder(applicationLiveData.getApplication())
+val apiServer: ApiServer by lazy {
+    retrofitBuilder()
 }
 
 interface ApiServer {
 
     @GET(DISCOVER_ENDPOINT)
-    fun getMovies(@Query("api_key") apiKey: String = BuildConfig.MOVIE_DB_API_KEY): Call<MoviesResponse>
+    fun getMovies(@Query("api_key") apiKey: String = BuildConfig.MOVIE_DB_API_KEY): MoviesResponse
 }
 
 
-private fun retrofitBuilder(context: Context) =
-    Retrofit.Builder()
+private fun retrofitBuilder(): ApiServer {
+    val loggingInterceptor = HttpLoggingInterceptor()
+    loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+    val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+    return Retrofit.Builder()
         .baseUrl(MOVIES_BASE_URL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
-//        .client(okHttp(cache(context), appKeyInterceptor(), offlineInterceptor(networkChecker(context))))  cashing part
+        .client(client)
         .build()
         .create(ApiServer::class.java)
+}
