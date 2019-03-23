@@ -2,7 +2,10 @@ package com.omni.movieappliation.features.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.omni.movieappliation.R
 import com.omni.movieappliation.entities.MovieEntity
+import com.omni.movieappliation.useCases.applicationLiveData
+import com.omni.movieappliation.useCases.getApplication
 import com.omni.movieappliation.useCases.repositories.moviesRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,6 +24,7 @@ class MoviesHomeViewModel : ViewModel() {
 
     init {
         isLoading.postValue(true)
+        errorLiveData.postValue(applicationLiveData.getApplication().getString(R.string.empty_view))
         val moviesObservable = Observable.fromCallable { moviesRepository.getMoviesList() }
         disposable = moviesObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
             .subscribe({ moviesResponse ->

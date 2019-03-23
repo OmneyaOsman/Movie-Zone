@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".features.details.DetailsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+    >
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/detail_img_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_launcher"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+            />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+            >
+
+                <ImageView
+                        android:id="@+id/detail_img_movie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_16"
+                        android:layout_marginEnd="@dimen/margin_16"
+                        android:src="@mipmap/ic_launcher_round"
+                        android:layout_margin="@dimen/margin_16"
+                        android:layout_gravity="center"
+
+                />
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
+
+                    <TextView
+                            android:id="@+id/release_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/padding_8"
+                            tools:text="release Date"
+                            android:textStyle="bold"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <TextView
+                            android:id="@+id/vote_avg"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/padding_8"
+                            tools:text="vote Average"
+                            android:textStyle="bold"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                    />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/overView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_16"
+                    tools:text="overView"
+
+            />
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <!--<ImageView-->
+    <!--android:id="@+id/detail_img_movie"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--android:src="@mipmap/ic_launcher_round"-->
+    <!--app:layout_anchor="@id/app_bar"-->
+    <!--app:layout_anchorGravity="bottom|start"-->
+    <!--android:layout_marginTop="16dp"/>-->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Movie Appliation</string>
+    <string name="app_name">Movies</string>
+    <string name="movie_poster">movie image poster</string>
+    <string name="empty_view">Empty View</string>
 </resources>
