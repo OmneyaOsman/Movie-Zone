@@ -10,13 +10,16 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.omni.movieappliation.useCases.getImageURL
 import kotlinx.android.synthetic.main.movie_list_item.view.*
+import com.omni.movieappliation.features.details.DetailsActivity
+import android.content.Intent
+import com.omni.movieappliation.features.details.MovieDetailsViewModel
+import com.omni.movieappliation.useCases.applicationLiveData
+import com.omni.movieappliation.useCases.getApplication
 
 
-class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     private lateinit var moviesList: List<MovieEntity>
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -31,7 +34,10 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(moviesList[position])
         holder.itemView.setOnClickListener {
+            val intent = Intent(applicationLiveData.getApplication(), DetailsActivity::class.java)
+            intent.putExtra("movie", moviesList[position])
 
+            applicationLiveData.getApplication().startActivity(intent)
         }
     }
 
@@ -42,6 +48,7 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding) {
         private val imageView: ImageView
+        private val movieDetailsViewModel = MovieDetailsViewModel()
 
 
         init {
@@ -50,6 +57,8 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
 
         fun bind(movie: MovieEntity) {
+            movieDetailsViewModel.bind(movie)
+            binding.tag = movieDetailsViewModel
             Glide.with(imageView.context)
                 .load(getImageURL(movie.poster_path))
                 .into(imageView)

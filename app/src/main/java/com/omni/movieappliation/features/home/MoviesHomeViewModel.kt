@@ -9,7 +9,6 @@ import com.omni.movieappliation.useCases.getApplication
 import com.omni.movieappliation.useCases.repositories.moviesRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 

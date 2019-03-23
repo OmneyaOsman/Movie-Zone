@@ -1,6 +1,10 @@
 package com.omni.movieappliation.entities
 
-data class MovieEntity(
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class MovieEntity (
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,
@@ -15,11 +19,11 @@ data class MovieEntity(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-)
-
+):Parcelable
+@Parcelize
 data class MoviesResponse(
     val page: Int,
     val results: List<MovieEntity>,
     val total_pages: Int,
     val total_results: Int
-)
+):Parcelable
