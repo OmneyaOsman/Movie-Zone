@@ -30,7 +30,6 @@ class MoviesHomeViewModel : ViewModel() {
             disposable = moviesObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
                 .subscribe({ moviesResponse ->
                     isLoading.postValue(false)
-                    errorLiveData.postValue("")
                     moviesResponse?.let {
                         moviesListLiveData.postValue(moviesResponse.results)
                     }

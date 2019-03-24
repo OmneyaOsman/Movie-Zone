@@ -7,19 +7,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omni.movieappliation.entities.MovieEntity
 import android.widget.ImageView
-import com.bumptech.glide.Glide
 import com.omni.movieappliation.useCases.getImageURL
 import kotlinx.android.synthetic.main.movie_list_item.view.*
 import com.omni.movieappliation.features.details.DetailsActivity
 import android.content.Intent
-import com.omni.movieappliation.features.details.MovieDetailsViewModel
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import com.omni.movieappliation.useCases.applicationLiveData
 import com.omni.movieappliation.useCases.getApplication
-
+import com.squareup.picasso.Picasso
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
-    private lateinit var moviesList: List<MovieEntity>
+    lateinit var moviesList: List<MovieEntity>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -36,7 +35,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
         holder.itemView.setOnClickListener {
             val intent = Intent(applicationLiveData.getApplication(), DetailsActivity::class.java)
             intent.putExtra("movie", moviesList[position])
-
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
             applicationLiveData.getApplication().startActivity(intent)
         }
     }
@@ -48,7 +47,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding) {
         private val imageView: ImageView
-        private val movieDetailsViewModel = MovieDetailsViewModel()
+//        private val movieDetailsViewModel = MovieDetailsViewModel()
 
 
         init {
@@ -57,9 +56,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
 
         fun bind(movie: MovieEntity) {
-            movieDetailsViewModel.bind(movie)
-            binding.tag = movieDetailsViewModel
-            Glide.with(imageView.context)
+            Picasso.get()
                 .load(getImageURL(movie.poster_path))
                 .into(imageView)
         }

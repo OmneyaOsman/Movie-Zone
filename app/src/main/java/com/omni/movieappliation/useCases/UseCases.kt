@@ -10,7 +10,7 @@ import android.net.ConnectivityManager
 
 
 
-fun getImageURL(moviePoster :String) ="$IMAGE_SIZE$BASE_IMAGE_URL$moviePoster"
+fun getImageURL(moviePoster :String , size :String = BIG_IMAGE_SIZE) ="$BASE_IMAGE_URL$size$moviePoster"
 
  fun isNetworkConnected(context : Context = applicationLiveData.getApplication() ): Boolean {
     var isConnected = false

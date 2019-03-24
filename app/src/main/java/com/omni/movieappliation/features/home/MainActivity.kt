@@ -51,7 +51,8 @@ private fun MainActivity.bindViews() = kotlin.with(viewModel) {
     moviesListLiveData.observe(this@bindViews,
         Observer {
             movieAdapter.updateMoviesList(it)
-            Log.d("callable", it.toString())
+            Log.d("callable", movieAdapter.itemCount.toString())
+            Log.d("callable", movieAdapter.moviesList[1].poster_path)
         })
 
 

@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
+                app:expandedTitleGravity="bottom"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -30,6 +31,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_launcher"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -47,6 +50,7 @@
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
         <LinearLayout
@@ -65,8 +69,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_16"
                         android:layout_marginEnd="@dimen/margin_16"
+                        android:layout_marginTop="@dimen/padding_8"
                         android:src="@mipmap/ic_launcher_round"
-                        android:layout_margin="@dimen/margin_16"
                         android:layout_gravity="center"
 
                 />
@@ -101,12 +105,22 @@
 
             </LinearLayout>
 
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_marginBottom="@dimen/padding_8"
+                    android:layout_marginTop="@dimen/padding_8"
+                    tools:text="overView"
+
+            />
             <TextView
                     android:id="@+id/overView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_16"
                     tools:text="overView"
+                    android:layout_marginStart="@dimen/margin_16"
 
             />
 

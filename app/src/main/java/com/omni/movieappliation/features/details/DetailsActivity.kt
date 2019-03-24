@@ -2,13 +2,16 @@ package com.omni.movieappliation.features.details
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
 import com.omni.movieappliation.R
-import com.omni.movieappliation.features.home.MoviesHomeViewModel
+import com.omni.movieappliation.entities.MovieEntity
 import com.omni.movieappliation.useCases.BASE_IMAGE_URL
+import com.omni.movieappliation.useCases.BIG_IMAGE_SIZE
+import com.omni.movieappliation.useCases.IMAGE_SIZE
 import com.omni.movieappliation.useCases.getImageURL
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_details.*
 
 
@@ -22,11 +25,25 @@ class DetailsActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar_details)
 
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 //        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        val intent = intent;
+        if (intent.hasExtra("movie"))
+            {
+               val movie = intent?.getParcelableExtra<MovieEntity>("movie")
+                detailsViewModel.bind(movie!!)
+
+            }
         bindViews()
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }
     private fun DetailsActivity.bindViews() = kotlin.with(detailsViewModel) {
@@ -51,27 +68,18 @@ class DetailsActivity : AppCompatActivity() {
             overView.text = it
         })
         posterPathLiveData.observe(this@bindViews, Observer {
-            Glide.with(this@bindViews)
-                .load(getImageURL(it))
+            Picasso.get()
+                .load(getImageURL(it, IMAGE_SIZE))
                 .into(detail_img_movie)
+            Log.d("callable ", getImageURL(it))
         })
 
         backDropLiveData.observe(this@bindViews, Observer {
 
-            Glide.with(this@bindViews)
-                .load("${BASE_IMAGE_URL}w500/$it")
+            Picasso.get()
+                .load(getImageURL(it))
                 .into(detail_img_cover)
         })
 
     }
 
-//    val intent = getIntent();
-//    if(intent.hasExtra("movie"))
-//    {
-//        movie = intent.getParcelableExtra("movie");
-//
-//
-//        ;
-//
-//
-//    }
