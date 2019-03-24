@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.omni.movieappliation.R
 import com.omni.movieappliation.entities.MovieEntity
+import com.omni.movieappliation.entities.MoviesResponse
 import com.omni.movieappliation.useCases.applicationLiveData
 import com.omni.movieappliation.useCases.getApplication
 import com.omni.movieappliation.useCases.isNetworkConnected
@@ -24,14 +25,14 @@ class MoviesHomeViewModel : ViewModel() {
 
     init {
         isLoading.postValue(true)
-        errorLiveData.postValue(applicationLiveData.getApplication().getString(R.string.empty_view))
         if (isNetworkConnected()) {
-            val moviesObservable = Observable.fromCallable { moviesRepository.getMoviesList() }
+            val moviesObservable = Observable.fromCallable<MoviesResponse> { moviesRepository.getMoviesList().execute().body() }
             disposable = moviesObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
                 .subscribe({ moviesResponse ->
                     isLoading.postValue(false)
-                    moviesResponse?.takeUnless { it.results.isEmpty() }?.let {
-                        moviesListLiveData.postValue(it.results)
+                    errorLiveData.postValue("")
+                    moviesResponse?.let {
+                        moviesListLiveData.postValue(moviesResponse.results)
                     }
                 }, { error ->
                     isLoading.postValue(false)

@@ -27,7 +27,7 @@ val apiServer: ApiServer by lazy {
 interface ApiServer {
 
     @GET(DISCOVER_ENDPOINT)
-    fun getMovies(@Query("api_key") apiKey: String = BuildConfig.MOVIE_DB_API_KEY): MoviesResponse
+    fun getMovies(@Query("api_key") apiKey: String = BuildConfig.MOVIE_DB_API_KEY): Call<MoviesResponse>
 }
 
 
