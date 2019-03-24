@@ -4,4 +4,5 @@
     <dimen name="padding_8">8dp</dimen>
     <dimen name="image_width">185dp</dimen>
     <dimen name="image_height">280dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

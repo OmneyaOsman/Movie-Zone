@@ -22,8 +22,10 @@ class DetailsActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar_details)
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar!!.setDisplayShowHomeEnabled(true)
         bindViews()
     }
 }
