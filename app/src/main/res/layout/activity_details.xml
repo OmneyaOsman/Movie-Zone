@@ -112,7 +112,7 @@
                     android:layout_marginStart="@dimen/margin_16"
                     android:layout_marginBottom="@dimen/padding_8"
                     android:layout_marginTop="@dimen/padding_8"
-                    tools:text="overView"
+                    android:text="overView:"
 
             />
             <TextView

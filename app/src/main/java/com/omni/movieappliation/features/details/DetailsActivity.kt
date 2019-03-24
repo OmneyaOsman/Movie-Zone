@@ -27,10 +27,9 @@ class DetailsActivity : AppCompatActivity() {
 
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        val intent = intent;
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar_details.setNavigationOnClickListener{finish()}
+        val intent = intent
         if (intent.hasExtra("movie"))
             {
                val movie = intent?.getParcelableExtra<MovieEntity>("movie")
