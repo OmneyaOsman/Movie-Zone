@@ -27,7 +27,6 @@ class DetailsActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar_details.setNavigationOnClickListener{finish()}
         val intent = intent
         if (intent.hasExtra(EXTRA_MOVIE))
             {
@@ -37,11 +36,6 @@ class DetailsActivity : AppCompatActivity() {
             }
         bindViews()
 
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
     }
 }
     private fun DetailsActivity.bindViews() = kotlin.with(detailsViewModel) {

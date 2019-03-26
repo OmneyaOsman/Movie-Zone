@@ -61,11 +61,6 @@ class MoviesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(moviesList.value!![position])
-//        holder.itemView.setOnClickListener {
-//            val intent = Intent(applicationLiveData.getApplication(), DetailsActivity::class.java)
-//            intent.putExtra("movie", moviesList[position])
-//            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-//        }
     }
 
 }
