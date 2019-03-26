@@ -1,66 +1,72 @@
 package com.omni.movieappliation.features.home
 
-import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.omni.movieappliation.entities.MovieEntity
-import android.widget.ImageView
 import com.omni.movieappliation.useCases.getImageURL
-import kotlinx.android.synthetic.main.movie_list_item.view.*
-import com.omni.movieappliation.features.details.DetailsActivity
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import com.omni.movieappliation.useCases.applicationLiveData
-import com.omni.movieappliation.useCases.getApplication
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.movie_list_item.view.*
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
-    lateinit var moviesList: List<MovieEntity>
+const val ACTION_SHOW_MOVIES_DETAILS = "ACTION_SHOW_MOVIES_DETAILS"
+const val EXTRA_MOVIE = "EXTRA_MOVIE"
+
+class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    private val imageView by lazy {
+        view.image_item_list
+    }
+
+
+    fun bind(movie: MovieEntity) {
+        Picasso.get()
+            .load(getImageURL(movie.poster_path))
+            .into(imageView)
+
+        view.setOnClickListener {
+            Intent(ACTION_SHOW_MOVIES_DETAILS)
+                .putExtra(EXTRA_MOVIE, movie)
+                .also { view.context.sendBroadcast(it) }
+        }
+    }
+
+}
+
+class MoviesAdapter(
+    lifecycleOwner: LifecycleOwner,
+    private val moviesList: MutableLiveData<List<MovieEntity>>
+) : RecyclerView.Adapter<ViewHolder>() {
+
+
+    init {
+        moviesList.observe(lifecycleOwner, Observer {
+            notifyDataSetChanged()
+        })
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: View = layoutInflater.inflate(com.omni.movieappliation.R.layout.movie_list_item, parent, false)
-        return ViewHolder(binding)
+        return LayoutInflater.from(parent.context)
+            .inflate(com.omni.movieappliation.R.layout.movie_list_item, parent, false)
+            .let { ViewHolder(it) }
     }
 
     override fun getItemCount(): Int {
-        return if (::moviesList.isInitialized) moviesList.size else 0
+        return moviesList.value?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(moviesList[position])
-        holder.itemView.setOnClickListener {
-            val intent = Intent(applicationLiveData.getApplication(), DetailsActivity::class.java)
-            intent.putExtra("movie", moviesList[position])
-            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-            applicationLiveData.getApplication().startActivity(intent)
-        }
+        holder.bind(moviesList.value!![position])
+//        holder.itemView.setOnClickListener {
+//            val intent = Intent(applicationLiveData.getApplication(), DetailsActivity::class.java)
+//            intent.putExtra("movie", moviesList[position])
+//            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+//        }
     }
 
-    fun updateMoviesList(moviesList: List<MovieEntity>) {
-        this.moviesList = moviesList
-        notifyDataSetChanged()
-    }
-
-    class ViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding) {
-        private val imageView: ImageView
-//        private val movieDetailsViewModel = MovieDetailsViewModel()
-
-
-        init {
-            imageView = itemView.image_item_list
-        }
-
-
-        fun bind(movie: MovieEntity) {
-            Picasso.get()
-                .load(getImageURL(movie.poster_path))
-                .into(imageView)
-        }
-
-    }
 }
 

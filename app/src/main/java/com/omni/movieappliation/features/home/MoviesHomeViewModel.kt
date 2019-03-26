@@ -1,43 +1,51 @@
 package com.omni.movieappliation.features.home
 
+import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.omni.movieappliation.R
 import com.omni.movieappliation.entities.MovieEntity
-import com.omni.movieappliation.entities.MoviesResponse
-import com.omni.movieappliation.useCases.applicationLiveData
-import com.omni.movieappliation.useCases.getApplication
+import com.omni.movieappliation.useCases.engine.toMutableLiveData
 import com.omni.movieappliation.useCases.isNetworkConnected
 import com.omni.movieappliation.useCases.repositories.moviesRepository
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 
 
-class MoviesHomeViewModel : ViewModel() {
+class MoviesHomeViewModel(
+    val showMovieDetails: PublishSubject<Parcelable> = PublishSubject.create(),
+    val isLoading: MutableLiveData<Boolean> = false.toMutableLiveData(),
+    val errorLiveData: MutableLiveData<String> = MutableLiveData(),
+    private val disposables: CompositeDisposable = CompositeDisposable(),
+    val moviesListLiveData: MutableLiveData<List<MovieEntity>> = ArrayList<MovieEntity>().toMutableLiveData()
 
-    private lateinit var disposable: Disposable
-    val isLoading = MutableLiveData<Boolean>()
-    val errorLiveData = MutableLiveData<String>()
-    val moviesListLiveData = MutableLiveData<List<MovieEntity>>()
+) : ViewModel() {
 
 
     init {
         isLoading.postValue(true)
+        retrieveMoviesList()
+    }
+
+    private fun retrieveMoviesList() {
+        Log.d("callable", "calling")
+
         if (isNetworkConnected()) {
-            val moviesObservable = Observable.fromCallable<MoviesResponse> { moviesRepository.getMoviesList().execute().body() }
-            disposable = moviesObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+            moviesRepository.getMoviesList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ moviesResponse ->
                     isLoading.postValue(false)
-                    moviesResponse?.let {
-                        moviesListLiveData.postValue(moviesResponse.results)
+                    moviesResponse?.let {response->
+                        moviesListLiveData.postValue(response.results)
                     }
                 }, { error ->
                     isLoading.postValue(false)
                     errorLiveData.postValue(error.message)
 
-                })
+                })?.also { disposable ->  disposables.add(disposable) }
         } else {
             isLoading.postValue(false)
             errorLiveData.postValue("Internet connection error")
@@ -47,7 +55,7 @@ class MoviesHomeViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        if (!disposable.isDisposed)
-            disposable.dispose()
+        showMovieDetails.onComplete()
+        disposables.dispose()
     }
 }

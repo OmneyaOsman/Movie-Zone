@@ -1,14 +1,13 @@
 package com.omni.movieappliation.features.details
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.omni.movieappliation.R
 import com.omni.movieappliation.entities.MovieEntity
-import com.omni.movieappliation.useCases.BASE_IMAGE_URL
-import com.omni.movieappliation.useCases.BIG_IMAGE_SIZE
+import com.omni.movieappliation.features.home.EXTRA_MOVIE
 import com.omni.movieappliation.useCases.IMAGE_SIZE
 import com.omni.movieappliation.useCases.getImageURL
 import com.squareup.picasso.Picasso
@@ -30,9 +29,9 @@ class DetailsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         toolbar_details.setNavigationOnClickListener{finish()}
         val intent = intent
-        if (intent.hasExtra("movie"))
+        if (intent.hasExtra(EXTRA_MOVIE))
             {
-               val movie = intent?.getParcelableExtra<MovieEntity>("movie")
+               val movie = intent?.getParcelableExtra<MovieEntity>(EXTRA_MOVIE)
                 detailsViewModel.bind(movie!!)
 
             }

@@ -1,12 +1,10 @@
 package com.omni.movieappliation.useCases
 
-import android.content.Context
 import com.omni.movieappliation.BuildConfig
 import com.omni.movieappliation.entities.MoviesResponse
-import io.reactivex.Single
+import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,7 +26,7 @@ val apiServer: ApiServer by lazy {
 interface ApiServer {
 
     @GET(DISCOVER_ENDPOINT)
-    fun getMovies(@Query("api_key") apiKey: String = BuildConfig.MOVIE_DB_API_KEY): Call<MoviesResponse>
+    fun getMovies(@Query("api_key") apiKey: String = BuildConfig.MOVIE_DB_API_KEY): Observable<MoviesResponse>
 }
 
 
