@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,6 +14,7 @@
 
     <style name="AppTheme.NoActionBar.Splash">
         <item name="colorPrimaryDark">@color/colorTransparent</item>
+        <item name="android:windowBackground">@drawable/launch_screen </item>
 
     </style>
 
