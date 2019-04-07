@@ -1,13 +1,13 @@
 package com.omni.movieappliation.features.home
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,16 +22,11 @@ import kotlinx.android.synthetic.main.content_main_activity.*
 import java.util.concurrent.TimeUnit
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MovieItemClickListener {
 
     val viewModel by lazy { ViewModelProviders.of(this).get(MoviesHomeViewModel::class.java) }
     val disposables = CompositeDisposable()
 
-    private val showMovieDetailsReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            viewModel.showMovieDetails.onNext(intent!!.getParcelableExtra(EXTRA_MOVIE))
-        }
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,11 +35,22 @@ class MainActivity : AppCompatActivity() {
         toolbar.setTitle(R.string.app_name)
         setSupportActionBar(toolbar)
         bindViews()
-        registerReceiver(showMovieDetailsReceiver, IntentFilter(ACTION_SHOW_MOVIES_DETAILS))
     }
 
+    override fun movieItemClickListener(pos: Int, movie: MovieEntity, imageView: ImageView) {
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this, imageView,
+            ViewCompat.getTransitionName(imageView)!!
+        )
+        val intent = Intent(this, DetailsActivity::class.java)
+        intent.apply {
+            putExtra(EXTRA_MOVIE, movie)
+            putExtra(EXTRA_MOVIE_IMAGE_TRANSITION_NAME, pos)
+        }.also { startActivity(it, options.toBundle()) }
+    }
+
+
     override fun onDestroy() {
-        unregisterReceiver(showMovieDetailsReceiver)
         disposables.dispose()
         super.onDestroy()
     }
@@ -59,7 +65,7 @@ private fun MainActivity.showMessage(message: String) {
 private fun MainActivity.bindViews() = kotlin.with(viewModel) {
 
     isLoading.observe(this@bindViews,
-        Observer {isLoading-> home_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE })
+        Observer { isLoading -> home_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE })
 
 
     errorLiveData.observe(this@bindViews,
@@ -67,16 +73,17 @@ private fun MainActivity.bindViews() = kotlin.with(viewModel) {
 
     kotlin.with(home_movies_recycler_view) {
         layoutManager = GridLayoutManager(this@bindViews, 2)
-        adapter = MoviesAdapter(this@bindViews , moviesListLiveData)
+        adapter = MoviesAdapter(this@bindViews, moviesListLiveData, this@bindViews)
     }
 
-        showMovieDetails
+    showMovieDetails
         .debounce(500, TimeUnit.MILLISECONDS)
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe {movie ->  startDetailsScreen(movie as MovieEntity) }
+        .subscribe { movie -> startDetailsScreen(movie as MovieEntity) }
         .also { disposables.add(it) }
 
 }
+
 private fun MainActivity.startDetailsScreen(movieEntity: MovieEntity) {
     Intent(this, DetailsActivity::class.java)
         .putExtra(EXTRA_MOVIE, movieEntity)

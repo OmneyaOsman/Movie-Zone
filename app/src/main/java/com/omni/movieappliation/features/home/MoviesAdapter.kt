@@ -1,9 +1,10 @@
 package com.omni.movieappliation.features.home
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -16,22 +17,27 @@ import kotlinx.android.synthetic.main.movie_list_item.view.*
 
 const val ACTION_SHOW_MOVIES_DETAILS = "ACTION_SHOW_MOVIES_DETAILS"
 const val EXTRA_MOVIE = "EXTRA_MOVIE"
+const val EXTRA_MOVIE_IMAGE_TRANSITION_NAME = "EXTRA_MOVIE_IMAGE_TRANSITION_NAME"
+
+interface MovieItemClickListener {
+    fun movieItemClickListener(pos: Int, movie: MovieEntity, imageView: ImageView)
+}
 
 class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     private val imageView by lazy {
         view.image_item_list
     }
 
-
-    fun bind(movie: MovieEntity) {
+    fun bind(movie: MovieEntity, pos: Int, movieItemClickListener: MovieItemClickListener) {
         Picasso.get()
             .load(getImageURL(movie.poster_path))
             .into(imageView)
 
+        ViewCompat.setTransitionName(imageView, EXTRA_MOVIE_IMAGE_TRANSITION_NAME)
+
         view.setOnClickListener {
-            Intent(ACTION_SHOW_MOVIES_DETAILS)
-                .putExtra(EXTRA_MOVIE, movie)
-                .also { view.context.sendBroadcast(it) }
+            movieItemClickListener.movieItemClickListener(pos, movie, imageView)
+
         }
     }
 
@@ -39,7 +45,8 @@ class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
 class MoviesAdapter(
     lifecycleOwner: LifecycleOwner,
-    private val moviesList: MutableLiveData<List<MovieEntity>>
+    private val moviesList: MutableLiveData<List<MovieEntity>>,
+    private val movieItemClickListener: MovieItemClickListener
 ) : RecyclerView.Adapter<ViewHolder>() {
 
 
@@ -60,7 +67,7 @@ class MoviesAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(moviesList.value!![position])
+        holder.bind(moviesList.value!![position], position, movieItemClickListener)
     }
 
 }
