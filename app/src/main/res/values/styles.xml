@@ -11,11 +11,28 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="AppTheme.NoActionBar.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+    <style name="AppTheme.NoActionBar.Splash">
+        <item name="colorPrimaryDark">@color/colorTransparent</item>
+        <item name="android:windowBackground">@drawable/launch_screen </item>
     </style>
+    <style name="AppTheme.NoActionBar.Details">
+        <item name="colorPrimaryDark">@color/colorTransparent</item>
+    </style>
+
+    <style name="AppTheme.Progressbar" parent="Widget.AppCompat.ProgressBar">
+        <item name="colorAccent">@color/gray_text_color</item>
+    </style>
+
+
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="Movies_Title_Style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/alice</item>
+        <item name="android:layout_margin">@dimen/padding_4</item>
+        <item name="android:textSize">@dimen/title_text_size</item>
+    </style>
 
 </resources>

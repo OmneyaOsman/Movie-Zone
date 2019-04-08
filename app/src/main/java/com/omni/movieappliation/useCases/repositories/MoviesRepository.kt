@@ -10,6 +10,7 @@ val moviesRepository  :MoviesRepository by lazy {
 
 class MoviesRepository(private val api: ApiServer = apiServer){
 
-    fun getMoviesList() = api.getMovies()
+    fun getTopMoviesList() = api.getTopRatedMovies()
+    fun getPopularMoviesList() = api.getPopularMovies()
 
 }

@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical" android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              xmlns:tools="http://schemas.android.com/tools">
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardPreventCornerOverlap="true"
+        app:cardCornerRadius="@dimen/padding_10"
+        android:clipToPadding="true"
+        android:layout_marginStart="@dimen/padding_4"
+        android:layout_marginEnd="@dimen/padding_4"
+        android:layout_marginTop="@dimen/padding_4"
+
+>
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--&gt;-->
+
+    <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/image_progress"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            android:indeterminate="true"
+            android:theme="@style/AppTheme.Progressbar"
+            app:layout_constraintEnd_toEndOf="@+id/image_item_list"
+            app:layout_constraintBottom_toBottomOf="@+id/image_item_list"
+            app:layout_constraintTop_toTopOf="@+id/image_item_list"
+            app:layout_constraintStart_toStartOf="@+id/image_item_list"
+    />
 
     <ImageView
             android:id="@+id/image_item_list"
             android:layout_width="@dimen/image_width"
             android:layout_height="@dimen/image_height"
-            android:scaleType="centerCrop"
             tools:src="@mipmap/ic_launcher"
-            android:contentDescription="@string/movie_poster"/>
+            android:contentDescription="@string/movie_poster"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="centerCrop"
+           />
 
-</LinearLayout>
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+</androidx.cardview.widget.CardView>

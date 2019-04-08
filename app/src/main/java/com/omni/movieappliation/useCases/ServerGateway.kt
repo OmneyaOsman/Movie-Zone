@@ -16,17 +16,38 @@ const val MOVIES_BASE_URL = "http://api.themoviedb.org/"
 const val BASE_IMAGE_URL = "http://image.tmdb.org/t/p"
 const val IMAGE_SIZE = "/w185"
 const val BIG_IMAGE_SIZE = "/w500"
-const val DISCOVER_ENDPOINT = "3/movie/top_rated "
+const val TOP_RATED_ENDPOINT = "3/movie/top_rated "
+const val POPULAR_MOVIES_ENDPOINT = "3/movie/popular "
 
 
 val apiServer: ApiServer by lazy {
     retrofitBuilder()
 }
 
+//Get Upcoming
+//GET
+///movie/upcoming
+
+//Get Now Playing
+//GET
+///movie/now_playing
+
+//Get Upcoming
+//GET
+///movie/upcoming
+//Get Similar Movies
+//GET
+///movie/{movie_id}/similar
+
+//crew
+//https://api.themoviedb.org/3/movie/150540?api_key=ceb888b71023afda704f84975d2642b5&append_to_response=credits
+
 interface ApiServer {
 
-    @GET(DISCOVER_ENDPOINT)
-    fun getMovies(@Query("api_key") apiKey: String = BuildConfig.MOVIE_DB_API_KEY): Observable<MoviesResponse>
+    @GET(TOP_RATED_ENDPOINT)
+    fun getTopRatedMovies(@Query("api_key") apiKey: String = BuildConfig.MOVIE_DB_API_KEY): Observable<MoviesResponse>
+    @GET(POPULAR_MOVIES_ENDPOINT)
+    fun getPopularMovies(@Query("api_key") apiKey: String = BuildConfig.MOVIE_DB_API_KEY): Observable<MoviesResponse>
 }
 
 
