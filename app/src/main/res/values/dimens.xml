@@ -2,8 +2,12 @@
 <resources>
     <dimen name="margin_16">16dp</dimen>
     <dimen name="padding_8">8dp</dimen>
-    <dimen name="image_width">185dp</dimen>
-    <dimen name="image_height">280dp</dimen>
+    <dimen name="image_width">130dp</dimen>
+    <dimen name="image_height">230dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="large_text_size">32sp</dimen>
+    <dimen name="padding_4">4dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="height_1">1dp</dimen>
+    <dimen name="title_text_size">24sp</dimen>
 </resources>

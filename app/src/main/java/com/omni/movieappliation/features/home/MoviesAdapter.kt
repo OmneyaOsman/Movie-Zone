@@ -10,7 +10,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.omni.movieappliation.entities.MovieEntity
+import com.omni.movieappliation.features.CropSquareTransformation
 import com.omni.movieappliation.useCases.getImageURL
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_list_item.view.*
 
@@ -31,7 +33,18 @@ class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     fun bind(movie: MovieEntity, pos: Int, movieItemClickListener: MovieItemClickListener) {
         Picasso.get()
             .load(getImageURL(movie.poster_path))
-            .into(imageView)
+            .transform(CropSquareTransformation(10, 0))
+            .into(imageView, object : Callback {
+                override fun onSuccess() {
+                    view.image_progress.hide()
+                }
+
+                override fun onError(e: Exception?) {
+                    view.image_progress.hide()
+                }
+
+            }
+            )
 
         ViewCompat.setTransitionName(imageView, EXTRA_MOVIE_IMAGE_TRANSITION_NAME)
 

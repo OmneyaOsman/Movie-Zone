@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,8 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            android:theme="@style/AppTheme.NoActionBar.AppBarOverlay"
-    >
+            android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
@@ -52,6 +49,8 @@
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:elevation="@dimen/padding_8"
+            android:background="@drawable/movies_home_grid_background_shape"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
         <LinearLayout
@@ -61,8 +60,7 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-            >
+                    android:orientation="horizontal">
 
                 <ImageView
                         android:id="@+id/detail_img_movie"

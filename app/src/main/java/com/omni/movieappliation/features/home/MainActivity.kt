@@ -10,7 +10,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.omni.movieappliation.R
 import com.omni.movieappliation.entities.MovieEntity
@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity(), MovieItemClickListener {
 
     val viewModel by lazy { ViewModelProviders.of(this).get(MoviesHomeViewModel::class.java) }
     val disposables = CompositeDisposable()
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,8 +71,12 @@ private fun MainActivity.bindViews() = kotlin.with(viewModel) {
         Observer { showMessage(it) })
 
     kotlin.with(home_movies_recycler_view) {
-        layoutManager = GridLayoutManager(this@bindViews, 2)
-        adapter = MoviesAdapter(this@bindViews, moviesListLiveData, this@bindViews)
+        layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
+        adapter = MoviesAdapter(this@bindViews, topRatedMoviesListLiveData, this@bindViews)
+    }
+    kotlin.with(popular_movies_recycler_view) {
+        layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
+        adapter = MoviesAdapter(this@bindViews, popularMoviesListLiveData, this@bindViews)
     }
 
     showMovieDetails

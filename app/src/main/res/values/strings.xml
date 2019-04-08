@@ -3,4 +3,6 @@
     <string name="movie_poster">movie image poster</string>
     <string name="empty_view">Empty View</string>
     <string name="title_activity_test_act">testACt</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="popular_movies">Popular Movies</string>
 </resources>
