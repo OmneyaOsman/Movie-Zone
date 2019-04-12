@@ -5,4 +5,5 @@
     <string name="title_activity_test_act">testACt</string>
     <string name="top_rated">Top Rated</string>
     <string name="popular_movies">Popular Movies</string>
+    <string name="image_transition_name">Transition Name</string>
 </resources>

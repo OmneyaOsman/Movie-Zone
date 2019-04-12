@@ -2,24 +2,16 @@ package com.omni.movieappliation.features.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.view.ViewCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
+import com.omni.entities.MovieEntity
 import com.omni.movieappliation.R
-import com.omni.movieappliation.entities.MovieEntity
+import com.omni.movieappliation.bindViews
 import com.omni.movieappliation.features.details.DetailsActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main_activity.*
-import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity(), MovieItemClickListener {
@@ -39,7 +31,7 @@ class MainActivity : AppCompatActivity(), MovieItemClickListener {
     override fun movieItemClickListener(pos: Int, movie: MovieEntity, imageView: ImageView) {
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this, imageView,
-            ViewCompat.getTransitionName(imageView)!!
+            getString(R.string.image_transition_name)
         )
         val intent = Intent(this, DetailsActivity::class.java)
         intent.apply {
@@ -55,42 +47,6 @@ class MainActivity : AppCompatActivity(), MovieItemClickListener {
     }
 }
 
-private fun MainActivity.showMessage(message: String) {
-    Snackbar.make(coordinator_layout, message, Snackbar.LENGTH_SHORT).show()
-    Log.d("callable", message)
-}
 
-
-private fun MainActivity.bindViews() = kotlin.with(viewModel) {
-
-    isLoading.observe(this@bindViews,
-        Observer { isLoading -> home_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE })
-
-
-    errorLiveData.observe(this@bindViews,
-        Observer { showMessage(it) })
-
-    kotlin.with(home_movies_recycler_view) {
-        layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
-        adapter = MoviesAdapter(this@bindViews, topRatedMoviesListLiveData, this@bindViews)
-    }
-    kotlin.with(popular_movies_recycler_view) {
-        layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
-        adapter = MoviesAdapter(this@bindViews, popularMoviesListLiveData, this@bindViews)
-    }
-
-    showMovieDetails
-        .debounce(500, TimeUnit.MILLISECONDS)
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { movie -> startDetailsScreen(movie as MovieEntity) }
-        .also { disposables.add(it) }
-
-}
-
-private fun MainActivity.startDetailsScreen(movieEntity: MovieEntity) {
-    Intent(this, DetailsActivity::class.java)
-        .putExtra(EXTRA_MOVIE, movieEntity)
-        .also { startActivity(it) }
-}
 
 

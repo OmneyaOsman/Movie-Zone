@@ -1,13 +1,13 @@
-package com.omni.movieappliation.useCases
+package com.omni.domain
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 
 
 
-internal val applicationLiveData = MutableLiveData<Application>()
+ val applicationLiveData = MutableLiveData<Application>()
 
-internal fun MutableLiveData<Application>.getApplication(): Application = value!!
+ fun MutableLiveData<Application>.getApplication(): Application = value!!
 
 object Domain {
 

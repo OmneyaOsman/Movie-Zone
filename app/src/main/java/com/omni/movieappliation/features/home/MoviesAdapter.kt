@@ -9,20 +9,18 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.omni.movieappliation.entities.MovieEntity
+import com.omni.movieappliation.R
 import com.omni.movieappliation.features.CropSquareTransformation
-import com.omni.movieappliation.useCases.getImageURL
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_list_item.view.*
 
 
-const val ACTION_SHOW_MOVIES_DETAILS = "ACTION_SHOW_MOVIES_DETAILS"
 const val EXTRA_MOVIE = "EXTRA_MOVIE"
 const val EXTRA_MOVIE_IMAGE_TRANSITION_NAME = "EXTRA_MOVIE_IMAGE_TRANSITION_NAME"
 
 interface MovieItemClickListener {
-    fun movieItemClickListener(pos: Int, movie: MovieEntity, imageView: ImageView)
+    fun movieItemClickListener(pos: Int, movie: com.omni.entities.MovieEntity, imageView: ImageView)
 }
 
 class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -30,9 +28,9 @@ class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         view.image_item_list
     }
 
-    fun bind(movie: MovieEntity, pos: Int, movieItemClickListener: MovieItemClickListener) {
+    fun bind(movie: com.omni.entities.MovieEntity, pos: Int, movieItemClickListener: MovieItemClickListener) {
         Picasso.get()
-            .load(getImageURL(movie.poster_path))
+            .load(com.omni.domain.getImageURL(movie.poster_path))
             .transform(CropSquareTransformation(10, 0))
             .into(imageView, object : Callback {
                 override fun onSuccess() {
@@ -58,7 +56,7 @@ class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
 class MoviesAdapter(
     lifecycleOwner: LifecycleOwner,
-    private val moviesList: MutableLiveData<List<MovieEntity>>,
+    private val moviesList: MutableLiveData<List<com.omni.entities.MovieEntity>>,
     private val movieItemClickListener: MovieItemClickListener
 ) : RecyclerView.Adapter<ViewHolder>() {
 
@@ -71,7 +69,7 @@ class MoviesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return LayoutInflater.from(parent.context)
-            .inflate(com.omni.movieappliation.R.layout.movie_list_item, parent, false)
+            .inflate(R.layout.movie_list_item, parent, false)
             .let { ViewHolder(it) }
     }
 

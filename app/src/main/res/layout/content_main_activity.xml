@@ -32,7 +32,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top_rated_title"
-                tools:listitem="@layout/movie_list_item"/>
+                tools:listitem="@layout/movie_list_item"
+                tools:itemCount="3"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/popular_movies_title"
                 android:text="@string/popular_movies"
@@ -54,6 +57,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/popular_movies_title"
                 tools:listitem="@layout/movie_list_item"
+                tools:itemCount="3"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_marginBottom="@dimen/padding_8"/>
 
         <ProgressBar

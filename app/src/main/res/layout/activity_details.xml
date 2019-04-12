@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
+            android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
             />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -71,6 +71,7 @@
                         android:layout_marginTop="@dimen/padding_8"
                         android:src="@mipmap/ic_launcher_round"
                         android:layout_gravity="center"
+                        android:transitionName="@string/image_transition_name"
 
                 />
 
@@ -96,6 +97,8 @@
                             android:layout_margin="@dimen/padding_8"
                             tools:text="vote Average"
                             android:textStyle="bold"
+                            android:drawableStart="@drawable/ic_star_black_24dp"
+                            android:drawablePadding="@dimen/margin_16"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                     />
 
@@ -104,22 +107,14 @@
 
             </LinearLayout>
 
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_16"
-                    android:layout_marginBottom="@dimen/padding_8"
-                    android:layout_marginTop="@dimen/padding_8"
-                    android:text="overView:"
-
-            />
             <TextView
                     android:id="@+id/overView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="overView"
                     android:layout_marginStart="@dimen/margin_16"
+                    style="@style/Movies_Title_Style"
+                    android:paddingBottom="@dimen/margin_16"
 
             />
 
@@ -128,15 +123,5 @@
 
     </androidx.core.widget.NestedScrollView>
 
-
-    <!--<ImageView-->
-    <!--android:id="@+id/detail_img_movie"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="100dp"-->
-    <!--android:layout_margin="@dimen/fab_margin"-->
-    <!--android:src="@mipmap/ic_launcher_round"-->
-    <!--app:layout_anchor="@id/app_bar"-->
-    <!--app:layout_anchorGravity="bottom|start"-->
-    <!--android:layout_marginTop="16dp"/>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
