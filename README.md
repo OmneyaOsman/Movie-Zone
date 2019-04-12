@@ -1,9 +1,22 @@
 # Movie Appliation
+
+simple application to get movies list from [TheMovieDB](https://www.themoviedb.org/documentation/api)
+
+Introduction
+------------
 simple movies application using  clean architecture , MVVM ,Repository pattern ,Architecture components
 
 
+Screenshots
+-----------
 
-## Pre-requisites
+![Home screen](screenshoot/device-2019-04-13-003536.png "Home screen of TopRated and Popular movies")
+![Home screen](screenshoot/device-2019-04-13-003336.png "Home screen landscape orientation")
+![Details screen](screenshoot/device-2019-04-13-003851.png "Details of movie selected")
+
+
+
+## Libraries Used
 
 This module requires the following modules/libraries:
 
@@ -26,5 +39,7 @@ Install as usual,
 
 ## APK
 
-You can try the apk on your device from [here](https://drive.google.com/file/d/13TiovHB_ULy1Zz_DFKv4aZm0c4OFP1S9/view?usp=sharing)
+[Releases page](https://drive.google.com/file/d/13TiovHB_ULy1Zz_DFKv4aZm0c4OFP1S9/view?usp=sharing)
+
+
 
