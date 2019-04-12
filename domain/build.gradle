@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildTypes.each {
+        it.buildConfigField('String', 'MOVIE_DB_API_KEY', '"ceb888b71023afda704f84975d2642b5"')
+    }
+
+}
+
+dependencies {configuration->
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api project(':entities')
+    architectureComponents(configuration)
+    customDependencies(configuration)
+
+
+}
+private static void architectureComponents(configuration) {
+    def architecture_components_version = "2.0.0-beta01"
+    // LiveData & ViewModel
+    configuration.api "androidx.lifecycle:lifecycle-extensions:$architecture_components_version"
+
+}
+private static void customDependencies(configuration) {
+    def retrofit_version = "2.4.0"
+    configuration.implementation 'com.google.code.gson:gson:2.8.4'
+    configuration.implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    configuration.implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    configuration.implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    configuration.implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version" //RxJava adapter
+    //Rx
+    configuration.api "io.reactivex.rxjava2:rxjava:2.2.0"
+    configuration.api "io.reactivex.rxjava2:rxandroid:2.1.0"
+
+}
+repositories {
+    mavenCentral()
+}

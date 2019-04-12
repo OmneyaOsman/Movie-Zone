@@ -1,7 +1,6 @@
-package com.omni.movieappliation.useCases
+package com.omni.domain
 
-import com.omni.movieappliation.BuildConfig
-import com.omni.movieappliation.entities.MoviesResponse
+import com.omni.entities.MoviesResponse
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -63,3 +62,5 @@ private fun retrofitBuilder(): ApiServer {
         .build()
         .create(ApiServer::class.java)
 }
+
+

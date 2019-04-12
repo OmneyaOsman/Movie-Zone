@@ -2,7 +2,6 @@ package com.omni.movieappliation.features.details
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.omni.movieappliation.entities.MovieEntity
 
 class MovieDetailsViewModel : ViewModel(){
 
@@ -16,7 +15,7 @@ class MovieDetailsViewModel : ViewModel(){
     val voteAverageDateLiveData  =  MutableLiveData<Double>()
     val voteCountDateLiveData  =  MutableLiveData<Int>()
 
-    fun bind(movieEntity: MovieEntity){
+    fun bind(movieEntity: com.omni.entities.MovieEntity){
         originalTitleLiveData.value = movieEntity.original_title
         backDropLiveData.value = movieEntity.backdrop_path
         titleLiveData.value = movieEntity.title

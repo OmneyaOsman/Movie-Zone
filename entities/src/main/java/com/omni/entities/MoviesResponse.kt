@@ -1,4 +1,4 @@
-package com.omni.movieappliation.entities
+package com.omni.entities
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
