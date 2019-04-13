@@ -11,10 +11,6 @@
 
     </style>
 
-    <style name="AppTheme.Splash">
-        <item name="colorPrimaryDark">@color/colorTransparent</item>
-        <item name="android:windowBackground">@drawable/launch_screen</item>
-    </style>
     <style name="AppTheme.Details">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
