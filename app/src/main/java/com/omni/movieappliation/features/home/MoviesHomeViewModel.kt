@@ -7,7 +7,6 @@ import com.omni.domain.engine.toMutableLiveData
 import com.omni.domain.repositories.moviesRepository
 import com.omni.entities.MovieEntity
 import com.omni.entities.MoviesResponse
-import com.omni.movieappliation.core.networkChecker
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -32,7 +31,7 @@ class MoviesHomeViewModel(
     }
 
     private fun retrieveMovies() {
-        if (networkChecker()) {
+//        if (networkChecker()) {
             Observable.zip(
                 moviesRepository.getTopMoviesList().subscribeOn(Schedulers.io()),
                 moviesRepository.getPopularMoviesList().subscribeOn(Schedulers.io()),
@@ -54,10 +53,10 @@ class MoviesHomeViewModel(
                     errorLiveData.postValue(error.message)
 
                 })?.also { disposable -> disposables.add(disposable) }
-        } else {
-            isLoading.postValue(false)
-            errorLiveData.postValue("Internet connection error")
-        }
+//        } else {
+//            isLoading.postValue(false)
+//            errorLiveData.postValue("Internet connection error")
+//        }
 
 
     }

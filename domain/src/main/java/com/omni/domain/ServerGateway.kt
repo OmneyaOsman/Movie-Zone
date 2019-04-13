@@ -1,9 +1,13 @@
 package com.omni.domain
 
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
 import com.omni.entities.MoviesResponse
 import io.reactivex.Observable
+import okhttp3.Cache
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -50,15 +54,38 @@ interface ApiServer {
 }
 
 
+fun networkChecker(context: Context = applicationLiveData.getApplication()): Boolean =
+    context.getSystemService(Context.CONNECTIVITY_SERVICE)
+        ?.let { it as ConnectivityManager }
+        ?.activeNetworkInfo
+        ?.isConnected
+        ?: false
+private const val cacheSize = (5 * 1024 * 1024).toLong()
+
+private fun getCash(applicationContext: Application = applicationLiveData.getApplication())
+        =  Cache(applicationContext.cacheDir, cacheSize)
+
+private fun getInterceptor() = Interceptor { chain ->
+    var request = chain.request()
+    request = if (networkChecker())
+        request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
+    else
+        request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build()
+    chain.proceed(request)
+}
+
+private fun getOkHttpClient()= OkHttpClient.Builder().cache(getCash()).addInterceptor(getInterceptor() ).build()
+
 private fun retrofitBuilder(): ApiServer {
-    val loggingInterceptor = HttpLoggingInterceptor()
-    loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-    val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+
+//    val loggingInterceptor = HttpLoggingInterceptor()
+//    loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+//    val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
     return Retrofit.Builder()
         .baseUrl(MOVIES_BASE_URL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
-        .client(client)
+        .client(getOkHttpClient())
         .build()
         .create(ApiServer::class.java)
 }
