@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.omni.movieappliation.R
-import com.omni.movieappliation.features.CropSquareTransformation
+import com.omni.movieappliation.core.CropSquareTransformation
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_list_item.view.*

@@ -1,12 +1,12 @@
 package com.omni.movieappliation
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.omni.movieappliation.features.CropSquareTransformation
+import com.omni.entities.MovieEntity
+import com.omni.movieappliation.core.CropSquareTransformation
 import com.omni.movieappliation.features.details.DetailsActivity
 import com.omni.movieappliation.features.home.EXTRA_MOVIE
 import com.omni.movieappliation.features.home.MainActivity
@@ -23,40 +23,39 @@ import java.util.concurrent.TimeUnit
 
  fun MainActivity.showMessage(message: String) {
     Snackbar.make(coordinator_layout, message, Snackbar.LENGTH_SHORT).show()
-    Log.d("callable", message)
 }
 
 
  fun MainActivity.bindViews() = kotlin.with(viewModel) {
 
-    isLoading.observe(this@bindViews,
-        Observer { isLoading -> home_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE })
+     isLoading.observe(this@bindViews,
+         Observer { isLoading -> home_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE })
 
 
-    errorLiveData.observe(this@bindViews,
-        Observer { showMessage(it) })
+     errorLiveData.observe(this@bindViews,
+         Observer { showMessage(it) })
 
-    kotlin.with(home_movies_recycler_view) {
-        setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
-        adapter = MoviesAdapter(this@bindViews, topRatedMoviesListLiveData, this@bindViews)
-    }
-    kotlin.with(popular_movies_recycler_view) {
-        setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
-        adapter = MoviesAdapter(this@bindViews, popularMoviesListLiveData, this@bindViews)
-    }
+     kotlin.with(home_movies_recycler_view) {
+         setHasFixedSize(true)
+         layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
+         adapter = MoviesAdapter(this@bindViews, topRatedMoviesListLiveData, this@bindViews)
+     }
+     kotlin.with(popular_movies_recycler_view) {
+         setHasFixedSize(true)
+         layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
+         adapter = MoviesAdapter(this@bindViews, popularMoviesListLiveData, this@bindViews)
+     }
 
-    showMovieDetails
-        .debounce(500, TimeUnit.MILLISECONDS)
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { movie -> startDetailsScreen(movie as com.omni.entities.MovieEntity) }
-        .also { disposables.add(it) }
+     showMovieDetails
+         .debounce(500, TimeUnit.MILLISECONDS)
+         .observeOn(AndroidSchedulers.mainThread())
+         .subscribe { movie -> startDetailsScreen(movie as MovieEntity) }
+         .also { disposables.add(it) }
 
-}
+ }!!
 
 
-private fun MainActivity.startDetailsScreen(movieEntity: com.omni.entities.MovieEntity) {
+private fun MainActivity.startDetailsScreen(movieEntity: MovieEntity) {
     Intent(this, DetailsActivity::class.java)
         .putExtra(EXTRA_MOVIE, movieEntity)
         .also { startActivity(it) }

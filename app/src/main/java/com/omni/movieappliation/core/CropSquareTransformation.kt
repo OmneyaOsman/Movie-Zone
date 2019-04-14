@@ -1,4 +1,4 @@
-package com.omni.movieappliation.features
+package com.omni.movieappliation.core
 
 import android.graphics.*
 
