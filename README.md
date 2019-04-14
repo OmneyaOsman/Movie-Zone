@@ -1,4 +1,4 @@
-# Movie Appliation
+# Movie Zone
 
 simple application to get movies list from [TheMovieDB](https://www.themoviedb.org/documentation/api)
 
