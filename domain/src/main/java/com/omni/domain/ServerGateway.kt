@@ -15,8 +15,8 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 
-const val MOVIES_BASE_URL = "http://api.themoviedb.org/"
-const val BASE_IMAGE_URL = "http://image.tmdb.org/t/p"
+const val MOVIES_BASE_URL = "https://api.themoviedb.org/"
+const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p"
 const val IMAGE_SIZE = "/w185"
 const val BIG_IMAGE_SIZE = "/w500"
 const val TOP_RATED_ENDPOINT = "3/movie/top_rated "
