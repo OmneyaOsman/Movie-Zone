@@ -1,8 +1,7 @@
 package com.omni.movieappliation
 
 import android.content.Intent
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -30,14 +29,14 @@ fun MainActivity.bindStatus(status: MoviesApiStatus?) {
     when (status) {
         MoviesApiStatus.LOADING -> {
             status_image.visibility = VISIBLE
-            popular_movies_title.visibility = GONE
-            top_rated_title.visibility = GONE
+            popular_movies_title.visibility = INVISIBLE
+            top_rated_title.visibility = INVISIBLE
             status_image.setImageResource(R.drawable.loading_animation)
         }
         MoviesApiStatus.ERROR -> {
             status_image.visibility = VISIBLE
-            popular_movies_title.visibility = GONE
-            top_rated_title.visibility = GONE
+            popular_movies_title.visibility = INVISIBLE
+            top_rated_title.visibility = INVISIBLE
             status_image.setImageResource(R.drawable.ic_connection_error)
         }
         MoviesApiStatus.DONE -> {
