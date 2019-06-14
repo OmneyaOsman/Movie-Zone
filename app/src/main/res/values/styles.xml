@@ -28,7 +28,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/alice</item>
         <item name="android:layout_margin">@dimen/padding_4</item>
-        <item name="android:textSize">@dimen/title_text_size</item>
+        <!--<item name="android:textSize">@dimen/title_text_size</item>-->
     </style>
 
 </resources>

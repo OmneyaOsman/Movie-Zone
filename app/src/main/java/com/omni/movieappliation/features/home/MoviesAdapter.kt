@@ -9,6 +9,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.omni.domain.getImageURL
+import com.omni.entities.MovieEntity
 import com.omni.movieappliation.R
 import com.omni.movieappliation.core.CropSquareTransformation
 import com.squareup.picasso.Callback
@@ -28,17 +30,19 @@ class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         view.image_item_list
     }
 
-    fun bind(movie: com.omni.entities.MovieEntity, pos: Int, movieItemClickListener: MovieItemClickListener) {
+    fun bind(movie: MovieEntity, pos: Int, movieItemClickListener: MovieItemClickListener) {
         Picasso.get()
-            .load(com.omni.domain.getImageURL(movie.poster_path))
+            .load(getImageURL(movie.poster_path))
             .transform(CropSquareTransformation(10, 0))
+            .apply {
+                placeholder(R.drawable.loading_animation)
+                error(R.drawable.ic_broken_image)
+            }
             .into(imageView, object : Callback {
                 override fun onSuccess() {
-                    view.image_progress.hide()
                 }
 
                 override fun onError(e: Exception?) {
-                    view.image_progress.hide()
                 }
 
             }
@@ -56,7 +60,7 @@ class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
 class MoviesAdapter(
     lifecycleOwner: LifecycleOwner,
-    private val moviesList: MutableLiveData<List<com.omni.entities.MovieEntity>>,
+    private val moviesList: MutableLiveData<List<MovieEntity>>,
     private val movieItemClickListener: MovieItemClickListener
 ) : RecyclerView.Adapter<ViewHolder>() {
 
