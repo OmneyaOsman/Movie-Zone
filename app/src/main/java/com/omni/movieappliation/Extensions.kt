@@ -1,7 +1,8 @@
 package com.omni.movieappliation
 
 import android.content.Intent
-import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -11,6 +12,7 @@ import com.omni.movieappliation.features.details.DetailsActivity
 import com.omni.movieappliation.features.home.EXTRA_MOVIE
 import com.omni.movieappliation.features.home.MainActivity
 import com.omni.movieappliation.features.home.MoviesAdapter
+import com.omni.movieappliation.features.home.MoviesApiStatus
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,39 +22,59 @@ import kotlinx.android.synthetic.main.content_main_activity.*
 import java.util.concurrent.TimeUnit
 
 
-
- fun MainActivity.showMessage(message: String) {
+fun MainActivity.showMessage(message: String) {
     Snackbar.make(coordinator_layout, message, Snackbar.LENGTH_SHORT).show()
 }
 
+fun MainActivity.bindStatus(status: MoviesApiStatus?) {
+    when (status) {
+        MoviesApiStatus.LOADING -> {
+            status_image.visibility = VISIBLE
+            popular_movies_title.visibility = GONE
+            top_rated_title.visibility = GONE
+            status_image.setImageResource(R.drawable.loading_animation)
+        }
+        MoviesApiStatus.ERROR -> {
+            status_image.visibility = VISIBLE
+            popular_movies_title.visibility = GONE
+            top_rated_title.visibility = GONE
+            status_image.setImageResource(R.drawable.ic_connection_error)
+        }
+        MoviesApiStatus.DONE -> {
+            status_image.visibility = GONE
+            popular_movies_title.visibility = VISIBLE
+            top_rated_title.visibility = VISIBLE
+        }
+    }
+}
 
- fun MainActivity.bindViews() = kotlin.with(viewModel) {
+fun MainActivity.bindViews() = with(viewModel) {
 
-     isLoading.observe(this@bindViews,
-         Observer { isLoading -> home_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE })
+    status.observe(this@bindViews,
+        Observer { bindStatus(it) })
 
 
-     errorLiveData.observe(this@bindViews,
-         Observer { showMessage(it) })
+    errorLiveData.observe(this@bindViews,
+        Observer { showMessage(it) })
 
-     kotlin.with(home_movies_recycler_view) {
-         setHasFixedSize(true)
-         layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
-         adapter = MoviesAdapter(this@bindViews, topRatedMoviesListLiveData, this@bindViews)
-     }
-     kotlin.with(popular_movies_recycler_view) {
-         setHasFixedSize(true)
-         layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
-         adapter = MoviesAdapter(this@bindViews, popularMoviesListLiveData, this@bindViews)
-     }
+    with(home_movies_recycler_view) {
+        setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
+        adapter = MoviesAdapter(this@bindViews, topRatedMoviesListLiveData, this@bindViews)
+    }
+    with(popular_movies_recycler_view) {
+        setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(this@bindViews, LinearLayoutManager.HORIZONTAL, false)
+        adapter = MoviesAdapter(this@bindViews, popularMoviesListLiveData, this@bindViews)
+    }
 
-     showMovieDetails
-         .debounce(500, TimeUnit.MILLISECONDS)
-         .observeOn(AndroidSchedulers.mainThread())
-         .subscribe { movie -> startDetailsScreen(movie as MovieEntity) }
-         .also { disposables.add(it) }
+    showMovieDetails
+        .debounce(500, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { movie -> startDetailsScreen(movie as MovieEntity) }
+        .also { disposables.add(it) }
 
- }!!
+}!!
 
 
 private fun MainActivity.startDetailsScreen(movieEntity: MovieEntity) {
@@ -62,7 +84,7 @@ private fun MainActivity.startDetailsScreen(movieEntity: MovieEntity) {
 }
 
 
- fun DetailsActivity.bindViews() = kotlin.with(detailsViewModel) {
+fun DetailsActivity.bindViews() = with(detailsViewModel) {
 
     titleLiveData.observe(this@bindViews,
         Observer {

@@ -10,48 +10,54 @@
         tools:showIn="@layout/activity_main"
         tools:context=".features.home.MainActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-    >
+            android:id="@+id/linearLayout" app:layout_constraintStart_toStartOf="@+id/status_image"
+            app:layout_constraintEnd_toStartOf="@+id/status_image">
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/top_rated_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/top_rated"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/home_movies_recycler_view"
                 style="@style/Movies_Title_Style"
-                android:layout_marginTop="@dimen/padding_8"/>
+              />
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_movies_recycler_view"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/image_height"
-                android:layout_marginTop="@dimen/padding_8"
-                android:layout_marginStart="@dimen/padding_4"
-                android:layout_marginEnd="@dimen/padding_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top_rated_title"
+                app:layout_constraintBottom_toTopOf="@id/popular_movies_title"
                 tools:listitem="@layout/movie_list_item"
                 tools:itemCount="3"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:clipToPadding="false"
+                android:layout_marginTop="@dimen/padding_8"
+                android:layout_marginBottom="@dimen/padding_8"
+        />
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/popular_movies_title"
                 android:text="@string/popular_movies"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 style="@style/Movies_Title_Style"
-                android:layout_marginTop="@dimen/padding_8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_movies_recycler_view"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+        />
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/popular_movies_recycler_view"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_8"
-                android:layout_marginStart="@dimen/padding_4"
-                android:layout_marginEnd="@dimen/padding_4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -60,16 +66,18 @@
                 tools:itemCount="3"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_marginBottom="@dimen/padding_8"/>
+                android:clipToPadding="false"
+               />
 
-        <ProgressBar
-                android:id="@+id/home_progress_bar"
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/status_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
+                app:layout_constraintTop_toTopOf="parent"
+/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
