@@ -22,7 +22,7 @@ const val EXTRA_MOVIE = "EXTRA_MOVIE"
 const val EXTRA_MOVIE_IMAGE_TRANSITION_NAME = "EXTRA_MOVIE_IMAGE_TRANSITION_NAME"
 
 interface MovieItemClickListener {
-    fun movieItemClickListener(pos: Int, movie: com.omni.entities.MovieEntity, imageView: ImageView)
+    fun movieItemClickListener(pos: Int, movie: MovieEntity, imageView: ImageView)
 }
 
 class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {

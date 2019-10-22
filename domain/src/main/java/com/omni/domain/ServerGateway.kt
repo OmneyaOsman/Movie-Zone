@@ -60,6 +60,7 @@ fun networkChecker(context: Context = applicationLiveData.getApplication()): Boo
         ?.activeNetworkInfo
         ?.isConnected
         ?: false
+
 private const val cacheSize = (5 * 1024 * 1024).toLong()
 
 private fun getCash(applicationContext: Application = applicationLiveData.getApplication())
@@ -74,7 +75,11 @@ private fun getInterceptor() = Interceptor { chain ->
     chain.proceed(request)
 }
 
-private fun getOkHttpClient()= OkHttpClient.Builder().cache(getCash()).addInterceptor(getInterceptor() ).build()
+private fun getOkHttpClient()=
+    OkHttpClient.Builder()
+        .cache(getCash())
+        .addInterceptor(getInterceptor())
+        .build()
 
 private fun retrofitBuilder(): ApiServer {
 
