@@ -1,17 +1,17 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.omni.movieappliation"
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion 23
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,8 +29,6 @@ android {
 }
 
 dependencies { configuration ->
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     androidX(configuration)
 
     testImplementation 'junit:junit:4.12'
@@ -45,12 +43,9 @@ dependencies { configuration ->
 }
 
 private static void androidX(configuration) {
-    def android_x_version = "1.1.0-alpha02"
-    configuration.implementation "com.google.android.material:material:$android_x_version"
-    configuration.implementation "androidx.appcompat:appcompat:$android_x_version"
-    configuration.implementation "androidx.core:core-ktx:$android_x_version"
-    configuration.implementation "androidx.recyclerview:recyclerview:$android_x_version"
-    def constraint_layout_version = "2.0.0-alpha3"
-    configuration.implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    configuration.implementation "com.google.android.material:material:1.7.0"
+    configuration.implementation "androidx.appcompat:appcompat:1.5.1"
+    configuration.implementation "androidx.core:core-ktx:1.9.0"
+    configuration.implementation "androidx.constraintlayout:constraintlayout:2.1.4"
 }
 
