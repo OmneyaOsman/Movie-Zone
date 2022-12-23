@@ -3,6 +3,7 @@ package com.omni.movieappliation.features.details
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import com.omni.entities.MovieEntity
 import com.omni.movieappliation.R
 import com.omni.movieappliation.bindViews
 import com.omni.movieappliation.features.home.EXTRA_MOVIE
@@ -27,7 +28,10 @@ class DetailsActivity : AppCompatActivity() {
         val intent = intent
         if (intent.hasExtra(EXTRA_MOVIE))
             intent?.let {
-                detailsViewModel.bind(it.getParcelableExtra(EXTRA_MOVIE))
+                it.getParcelableExtra<MovieEntity>(EXTRA_MOVIE)?.let{movie->
+                    detailsViewModel.bind(movie)
+                }
+
             }
 
 

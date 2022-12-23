@@ -44,6 +44,8 @@ fun MainActivity.bindStatus(status: MoviesApiStatus?) {
             popular_movies_title.visibility = VISIBLE
             top_rated_title.visibility = VISIBLE
         }
+        else -> {//when null do nothing
+         }
     }
 }
 
